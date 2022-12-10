@@ -47,3 +47,38 @@ export const signup = asyncHandler(async (req, res) => {
     user,
   });
 });
+
+export const signin = asyncHandler(async (req, res) => {
+  // Extact data from body
+  const { email, password } = req.body;
+  if (!(email && password)) {
+    throw new CustomError("All field are required", 400);
+  }
+  const user = await User.findOne({ email });
+
+  if (!(user && (await user.comparePassword(password)))) {
+    throw new CustomError("Invalid email or password.", 400);
+  }
+
+  // Check how many time user is longing our app
+  await User.findByIdAndUpdate(
+    user._id,
+    { $inc: { loginCount: 1 } },
+    { new: true }
+  );
+
+  user.password = undefined;
+
+  const token = user.authJwtToken();
+
+  res.cookie("sign_in", token, {
+    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    user,
+    sign_in: token,
+  });
+});
