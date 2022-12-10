@@ -34,6 +34,11 @@ const userSchema = Schema(
       default: false,
     },
 
+    verifyToken: {
+      type: String,
+      default: null,
+    },
+
     photo: {
       public_id: {
         type: String,

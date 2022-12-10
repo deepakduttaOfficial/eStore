@@ -1,6 +1,11 @@
+import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from "uuid";
+
 import User from "../models/user.shema.js";
 import asyncHandler from "../services/asyncHandler.js";
 import CustomError from "../services/errorHandler.js";
+import envConfig from "../config/env.config.js";
+import authMailSender from "../services/authMailSender.js";
 
 export const signup = asyncHandler(async (req, res) => {
   // Extact data from body
@@ -13,11 +18,22 @@ export const signup = asyncHandler(async (req, res) => {
     throw new CustomError("User already exists", 400);
   }
 
-  const data = { name, email, password };
+  const verifyToken = jwt.sign(
+    { id: uuidv4() },
+    envConfig.EMAIL_VERIFY_TOKEN_SECRET_KEY,
+    {
+      expiresIn: "1h",
+    }
+  );
+
+  const data = { name, email, password, verifyToken };
 
   const user = await User.create(data);
 
   user.password = undefined;
+
+  const options = { email, name, verifyToken };
+  authMailSender(options, req);
 
   // const token = user.authJwtToken();
 

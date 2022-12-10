@@ -1,11 +1,31 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+const {
+  PORT,
+  DB_URL,
+  JWT_SECRET,
+  JWT_EXPIRY,
+  MAIL_HOST,
+  MAIL_PORT,
+  MAIL_USERNAME,
+  MAIL_PASSWORD,
+  MAIL_EMAIL,
+  EMAIL_VERIFY_TOKEN_SECRET_KEY,
+} = process.env;
+
 const envConfig = {
-  PORT: process.env.PORT || 8000,
-  DB_URL: process.env.DB_URL || "mongodb://127.0.0.1:27017/CackOrder",
-  JWT_SECRET: process.env.JWT_SECRET,
-  JWT_EXPIRY: process.env.JWT_EXPIRY,
+  PORT: PORT || 8000,
+  DB_URL: DB_URL || "mongodb://127.0.0.1:27017/CackOrder",
+  JWT_SECRET,
+  JWT_EXPIRY,
+  // Mail creadential
+  MAIL_HOST,
+  MAIL_PORT,
+  MAIL_USERNAME,
+  MAIL_PASSWORD,
+  MAIL_EMAIL,
+  EMAIL_VERIFY_TOKEN_SECRET_KEY,
 };
 
 export default envConfig;
