@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import AuthRoles from "../utils/authRoles.js";
+import envConfig from "../config/env.config.js";
 
 const { Schema, model } = mongoose;
 
@@ -23,7 +24,7 @@ const userSchema = Schema(
 
     password: {
       type: String,
-      maxLength: [4, "Password must be at least 4 charecter long"],
+      minLength: [4, "Password must be at least 4 charecter long"],
       required: [true, "Password is required"],
       trim: true,
     },
@@ -98,9 +99,9 @@ userSchema.methods = {
         _id: this._id,
         role: this.role,
       },
-      config.JWT_SECRET,
+      envConfig.JWT_SECRET,
       {
-        expiresIn: config.JWT_EXPIRY,
+        expiresIn: envConfig.JWT_EXPIRY,
       }
     );
   },
