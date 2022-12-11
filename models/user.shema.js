@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import AuthRoles from "../utils/authRoles.js";
 import envConfig from "../config/env.config.js";
+import crypto from "crypto";
 
 const { Schema, model } = mongoose;
 
@@ -59,12 +60,12 @@ const userSchema = Schema(
       default: 0,
     },
 
-    token: {
+    resetPasswordToken: {
       type: String,
       default: null,
     },
 
-    tokenDate: {
+    resetPasswordExpires: {
       type: Date,
       default: null,
     },
@@ -109,6 +110,18 @@ userSchema.methods = {
         expiresIn: envConfig.JWT_EXPIRY,
       }
     );
+  },
+
+  // Reset password
+  generateResetPasswordToken: function () {
+    const resetToken = crypto.randomBytes(20).toString("hex");
+    this.resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    this.resetPasswordExpires = Date.now() + 20 * 60 * 1000;
+    return resetToken;
   },
 };
 

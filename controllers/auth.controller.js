@@ -6,6 +6,7 @@ import asyncHandler from "../services/asyncHandler.js";
 import CustomError from "../services/errorHandler.js";
 import envConfig from "../config/env.config.js";
 import authMailSender from "../services/authMailSender.js";
+import resetPasswordMailSender from "../services/resetPasswordMailSender.js";
 
 export const signup = asyncHandler(async (req, res) => {
   // Extact data from body
@@ -80,5 +81,58 @@ export const signin = asyncHandler(async (req, res) => {
     success: true,
     user,
     sign_in: token,
+  });
+});
+
+export const recoverPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  if (!email) throw new CustomError("Enter email address", 400);
+  const getUser = await User.findOne({ email });
+  if (!getUser) throw new CustomError("User not found", 400);
+
+  getUser.generateResetPasswordToken();
+
+  const user = await getUser.save();
+
+  let link = `${envConfig.DOMAIN_URL}/account/reset-password?id=${user._id}&reset_password_token=${user.resetPasswordToken}`;
+
+  const options = { email, name: user.name, link };
+
+  resetPasswordMailSender(options);
+  return res.status(200).json({
+    success: true,
+    message: "Chack you mail and reset your password",
+  });
+});
+
+export const resetPassword = asyncHandler(async (req, res) => {
+  const { id, reset_password_token } = req.query;
+  const { password } = req.body;
+
+  if (!(id?.length === 24 && reset_password_token))
+    throw new CustomError("Invalid url", 400);
+
+  const user = await User.findOne({
+    _id: id,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+
+  if (!user) throw new CustomError("Password reset token has expired.", 400);
+
+  if (user.resetPasswordToken !== reset_password_token) {
+    throw new CustomError("Password reset token is invalid", 400);
+  }
+  if (!(password?.length >= 4))
+    throw new CustomError("Password must be 4 charecter long", 400);
+
+  user.password = password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+
+  await user.save();
+
+  return res.status(200).json({
+    success: true,
+    message: "Password changed successfully",
   });
 });

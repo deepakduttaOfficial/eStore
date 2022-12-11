@@ -12,6 +12,7 @@ const {
   MAIL_PASSWORD,
   MAIL_EMAIL,
   EMAIL_VERIFY_TOKEN_SECRET_KEY,
+  DOMAIN_URL,
 } = process.env;
 
 const envConfig = {
@@ -26,6 +27,7 @@ const envConfig = {
   MAIL_PASSWORD,
   MAIL_EMAIL,
   EMAIL_VERIFY_TOKEN_SECRET_KEY,
+  DOMAIN_URL,
 };
 
 export default envConfig;
