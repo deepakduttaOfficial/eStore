@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
+
 import AuthRoles from "../utils/authRoles.js";
 import envConfig from "../config/env.config.js";
-import crypto from "crypto";
 
 const { Schema, model } = mongoose;
 
@@ -105,7 +106,7 @@ userSchema.methods = {
         _id: this._id,
         role: this.role,
       },
-      envConfig.JWT_SECRET,
+      envConfig.JWT_SECRET_AUTH,
       {
         expiresIn: envConfig.JWT_EXPIRY,
       }

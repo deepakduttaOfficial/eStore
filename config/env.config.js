@@ -4,7 +4,7 @@ dotenv.config();
 const {
   PORT,
   DB_URL,
-  JWT_SECRET,
+  JWT_SECRET_AUTH,
   JWT_EXPIRY,
   MAIL_HOST,
   MAIL_PORT,
@@ -18,7 +18,7 @@ const {
 const envConfig = {
   PORT: PORT || 8000,
   DB_URL: DB_URL || "mongodb://127.0.0.1:27017/CackOrder",
-  JWT_SECRET,
+  JWT_SECRET_AUTH,
   JWT_EXPIRY,
   // Mail creadential
   MAIL_HOST,

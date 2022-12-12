@@ -36,13 +36,6 @@ export const signup = asyncHandler(async (req, res) => {
   const options = { email, name, verifyToken };
   authMailSender(options, req);
 
-  // const token = user.authJwtToken();
-
-  // res.cookie("sign_in", token, {
-  //   expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-  //   httpOnly: true,
-  // });
-
   res.status(200).json({
     success: true,
     user,
