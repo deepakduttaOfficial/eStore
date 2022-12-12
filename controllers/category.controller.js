@@ -36,3 +36,13 @@ export const updateCategory = asyncHandler(async (req, res) => {
     category,
   });
 });
+
+export const getSingleCategory = asyncHandler(async (req, res) => {
+  // Extact data from body
+  const category = req.category;
+  // console.log(category);
+  res.status(200).json({
+    success: true,
+    category,
+  });
+});
