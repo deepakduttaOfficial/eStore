@@ -7,6 +7,8 @@ export const createCategory = asyncHandler(async (req, res) => {
   const { name } = req.body;
   if (!name) throw new CustomError("Category name is required", 400);
 
+  const existCategory = await Category.findOne({ name });
+  if (existCategory) throw new CustomError("This category already exist");
   const date = {
     name,
     user: req.user._id,
@@ -54,5 +56,17 @@ export const getAllCategory = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     categories,
+  });
+});
+
+export const removeCategory = asyncHandler(async (req, res) => {
+  // Extact data from body
+  const category = req.category;
+
+  await category.remove();
+
+  res.status(200).json({
+    success: true,
+    message: `Category removed successfully`,
   });
 });

@@ -5,6 +5,7 @@ import {
   createCategory,
   getAllCategory,
   getSingleCategory,
+  removeCategory,
   updateCategory,
 } from "../controllers/category.controller.js";
 
@@ -37,5 +38,13 @@ router.put(
 
 router.get("/category/get/:categoryId", getSingleCategory);
 router.get("/category/get", getAllCategory);
+
+router.delete(
+  "/category/remove/:userId/:categoryId",
+  isSignin,
+  isAuthenticate,
+  isAdmin,
+  removeCategory
+);
 
 export default router;
