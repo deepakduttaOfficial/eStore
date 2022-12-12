@@ -46,3 +46,13 @@ export const getSingleCategory = asyncHandler(async (req, res) => {
     category,
   });
 });
+
+export const getAllCategory = asyncHandler(async (req, res) => {
+  // Extact data from body
+  const categories = await Category.find();
+
+  res.status(200).json({
+    success: true,
+    categories,
+  });
+});

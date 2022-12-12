@@ -3,6 +3,7 @@ const router = express.Router();
 
 import {
   createCategory,
+  getAllCategory,
   getSingleCategory,
   updateCategory,
 } from "../controllers/category.controller.js";
@@ -35,5 +36,6 @@ router.put(
 );
 
 router.get("/category/get/:categoryId", getSingleCategory);
+router.get("/category/get", getAllCategory);
 
 export default router;
