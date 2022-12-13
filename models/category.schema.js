@@ -11,6 +11,13 @@ const categorySchema = new mongoose.Schema(
       maxLength: [220, "must be under 220 chanrecter"],
     },
 
+    products: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
+
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",
