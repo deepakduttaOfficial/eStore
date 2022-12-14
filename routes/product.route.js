@@ -3,6 +3,8 @@ const router = express.Router();
 
 import {
   createProduct,
+  getProduct,
+  getProducts,
   updateProduct,
 } from "../controllers/product.controller.js";
 import {
@@ -31,5 +33,8 @@ router.put(
   isAdmin,
   updateProduct
 );
+
+router.get("/product/get", getProducts);
+router.get("/product/get/:productId", getProduct);
 
 export default router;

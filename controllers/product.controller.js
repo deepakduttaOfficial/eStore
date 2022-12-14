@@ -117,3 +117,19 @@ export const updateProduct = asyncHandler(async (req, res) => {
     updateProduct,
   });
 });
+
+export const getProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({});
+  return res.status(200).json({
+    success: true,
+    products,
+  });
+});
+
+export const getProduct = asyncHandler(async (req, res) => {
+  const product = req.product;
+  return res.status(200).json({
+    success: true,
+    product,
+  });
+});
