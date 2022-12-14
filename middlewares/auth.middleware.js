@@ -7,7 +7,7 @@ import CustomError from "../services/errorHandler.js";
 
 export const isSignin = asyncHandler(async (req, _res, next) => {
   const token =
-    req.headers?.authorization.replace("Bearer ", "") ||
+    req.headers?.authorization?.replace("Bearer ", "") ||
     req.headers?.cookie?.replace("sign_in=", "") ||
     req.body.token;
 

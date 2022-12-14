@@ -5,6 +5,7 @@ import {
   createProduct,
   getProduct,
   getProducts,
+  removeProduct,
   updateProduct,
 } from "../controllers/product.controller.js";
 import {
@@ -36,5 +37,13 @@ router.put(
 
 router.get("/product/get", getProducts);
 router.get("/product/get/:productId", getProduct);
+
+router.delete(
+  "/product/remove/:userId/:productId",
+  isSignin,
+  isAuthenticate,
+  isAdmin,
+  removeProduct
+);
 
 export default router;

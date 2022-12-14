@@ -133,3 +133,17 @@ export const getProduct = asyncHandler(async (req, res) => {
     product,
   });
 });
+
+export const removeProduct = asyncHandler(async (req, res) => {
+  const product = req.product;
+
+  for (const file of product.photos) {
+    await cloudinary.v2.uploader.destroy(file.public_id);
+  }
+
+  await product.remove();
+  return res.status(200).json({
+    success: true,
+    message: "Product removed successfully",
+  });
+});
