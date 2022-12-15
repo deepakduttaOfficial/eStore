@@ -178,3 +178,31 @@ export const updatePassword = asyncHandler(async (req, res) => {
     message: user,
   });
 });
+
+// Admin controllers
+export const adminGetAllUser = asyncHandler(async (req, res) => {
+  const users = await User.find();
+  for (const user of users) {
+    user.password = undefined;
+  }
+  return res.status(200).json({
+    success: true,
+    users,
+  });
+});
+
+export const adminUpdateRole = asyncHandler(async (req, res) => {
+  const { role } = req.body;
+  if (!role) throw new CustomError("Role is requried", 400);
+
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    { role },
+    { new: true }
+  );
+  user.password = undefined;
+  return res.status(200).json({
+    success: true,
+    user,
+  });
+});

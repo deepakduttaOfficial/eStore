@@ -10,28 +10,28 @@ import {
 } from "../controllers/category.controller.js";
 
 import {
-  findUserById,
+  findAdminById,
   isAdmin,
-  isAuthenticate,
+  isAuthenticateAdmin,
   isSignin,
 } from "../middlewares/auth.middleware.js";
 import { findCategoryById } from "../middlewares/category.middleware.js";
 
-router.param("userId", findUserById);
+router.param("adminId", findAdminById);
 router.param("categoryId", findCategoryById);
 
 router.post(
-  "/category/create/:userId",
+  "/category/create/:adminId",
   isSignin,
-  isAuthenticate,
+  isAuthenticateAdmin,
   isAdmin,
   createCategory
 );
 
 router.put(
-  "/category/update/:userId/:categoryId",
+  "/category/update/:adminId/:categoryId",
   isSignin,
-  isAuthenticate,
+  isAuthenticateAdmin,
   isAdmin,
   updateCategory
 );
@@ -40,9 +40,9 @@ router.get("/category/get/:categoryId", getSingleCategory);
 router.get("/category/get", getAllCategory);
 
 router.delete(
-  "/category/remove/:userId/:categoryId",
+  "/category/remove/:adminId/:categoryId",
   isSignin,
-  isAuthenticate,
+  isAuthenticateAdmin,
   isAdmin,
   removeCategory
 );

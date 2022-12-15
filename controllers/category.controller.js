@@ -11,7 +11,7 @@ export const createCategory = asyncHandler(async (req, res) => {
   if (existCategory) throw new CustomError("This category already exist");
   const date = {
     name,
-    user: req.user._id,
+    user: req.admin._id,
   };
   const category = await Category.create(date);
 

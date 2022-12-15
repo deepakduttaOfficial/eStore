@@ -9,28 +9,28 @@ import {
   updateProduct,
 } from "../controllers/product.controller.js";
 import {
-  findUserById,
+  findAdminById,
   isAdmin,
-  isAuthenticate,
+  isAuthenticateAdmin,
   isSignin,
 } from "../middlewares/auth.middleware.js";
 import { findProductById } from "../middlewares/product.middleware.js";
 
-router.param("userId", findUserById);
+router.param("adminId", findAdminById);
 router.param("productId", findProductById);
 
 router.post(
-  "/product/create/:userId",
+  "/product/create/:adminId",
   isSignin,
-  isAuthenticate,
+  isAuthenticateAdmin,
   isAdmin,
   createProduct
 );
 
 router.put(
-  "/product/update/:userId/:productId",
+  "/product/update/:adminId/:productId",
   isSignin,
-  isAuthenticate,
+  isAuthenticateAdmin,
   isAdmin,
   updateProduct
 );
@@ -39,9 +39,9 @@ router.get("/product/get", getProducts);
 router.get("/product/get/:productId", getProduct);
 
 router.delete(
-  "/product/remove/:userId/:productId",
+  "/product/remove/:adminId/:productId",
   isSignin,
-  isAuthenticate,
+  isAuthenticateAdmin,
   isAdmin,
   removeProduct
 );

@@ -2,6 +2,8 @@ import express from "express";
 const router = express.Router();
 
 import {
+  adminGetAllUser,
+  adminUpdateRole,
   recoverPassword,
   resetPassword,
   signin,
@@ -10,12 +12,16 @@ import {
   updateProfile,
 } from "../controllers/auth.controller.js";
 import {
+  findAdminById,
   findUserById,
+  isAdmin,
   isAuthenticate,
+  isAuthenticateAdmin,
   isSignin,
 } from "../middlewares/auth.middleware.js";
 
 router.param("userId", findUserById);
+router.param("adminId", findAdminById);
 
 router.post("/signup", signup);
 router.post("/signin", signin);
@@ -28,6 +34,23 @@ router.put(
   isSignin,
   isAuthenticate,
   updatePassword
+);
+
+// Admin route
+router.get(
+  "/admin/dashboard/:adminId/users",
+  isSignin,
+  isAuthenticateAdmin,
+  isAdmin,
+  adminGetAllUser
+);
+
+router.put(
+  "/admin/dashboard/:adminId/users/:userId/update/role",
+  isSignin,
+  isAuthenticateAdmin,
+  isAdmin,
+  adminUpdateRole
 );
 
 export default router;

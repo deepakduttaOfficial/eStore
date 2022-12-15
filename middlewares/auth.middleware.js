@@ -35,8 +35,28 @@ export const findUserById = async (req, res, next, id) => {
   }
 };
 
+// Admin middleware
 export const isAdmin = asyncHandler(async (req, _res, next) => {
-  if (!(req.user.role === "ADMIN" && req.auth.role === "ADMIN"))
+  if (!(req.admin.role === "ADMIN" && req.auth.role === "ADMIN"))
     throw new CustomError("You are not Admin", 400);
+  next();
+});
+
+export const findAdminById = async (req, res, next, id) => {
+  try {
+    const admin = await User.findById(id);
+    if (!admin) return res.status(400).json({ error: "Invalid admin Id" });
+    admin.password = undefined;
+    req.admin = admin;
+    next();
+  } catch (error) {
+    return res.status(400).json({ error: "Invalid admin Id" });
+  }
+};
+
+export const isAuthenticateAdmin = asyncHandler(async (req, _res, next) => {
+  if (!req.admin._id.equals(req.auth._id))
+    throw new CustomError("You are not authenticate admin", 400);
+
   next();
 });
