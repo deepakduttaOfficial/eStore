@@ -53,7 +53,7 @@ const orderSchema = new mongoose.Schema(
           type: Number,
           required: true,
         },
-        product: {
+        productId: {
           type: Schema.Types.ObjectId,
           ref: "Product",
           required: true,
@@ -62,13 +62,13 @@ const orderSchema = new mongoose.Schema(
     ],
 
     paymentInfo: {
-      razorpay_payment_id: {
+      id: {
         type: String,
       },
-      razorpay_order_id: {
+      receipt: {
         type: String,
       },
-      razorpay_signature: {
+      status: {
         type: String,
       },
     },

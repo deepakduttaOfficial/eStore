@@ -1,5 +1,4 @@
 import Product from "../models/product.schema.js";
-import CustomError from "../services/errorHandler.js";
 
 export const findProductById = async (req, res, next, id) => {
   try {

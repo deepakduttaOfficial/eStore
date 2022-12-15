@@ -85,7 +85,6 @@ export const updateProduct = asyncHandler(async (req, res) => {
     }
 
     for (const file of product.photos) {
-      console.log(file.public_id);
       await cloudinary.v2.uploader.destroy(file.public_id);
     }
 
