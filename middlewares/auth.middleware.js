@@ -23,16 +23,15 @@ export const isAuthenticate = asyncHandler(async (req, _res, next) => {
   next();
 });
 
-export const findUserById = async (req, _res, next, id) => {
+export const findUserById = async (req, res, next, id) => {
   try {
     const user = await User.findById(id);
-    if (!user) throw new CustomError("Invalid User", 400);
+    if (!user) return res.status(400).json({ error: "Invalid User" });
     user.password = undefined;
     req.user = user;
     next();
   } catch (error) {
-    console.log(error);
-    throw new Error("Something went wrong");
+    return res.status(400).json({ error: "Invalid User" });
   }
 };
 

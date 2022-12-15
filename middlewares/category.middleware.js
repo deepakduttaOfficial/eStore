@@ -12,6 +12,8 @@ export const findCategoryById = async (req, res, next, id) => {
     next();
   } catch (error) {
     console.log(error);
-    throw new Error("Something went wrong");
+    return res
+      .status(400)
+      .json({ error: "This Category is no longer existed" });
   }
 };
