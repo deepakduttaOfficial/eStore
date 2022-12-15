@@ -16,6 +16,8 @@ const {
   CLOUDINARY_CLOUD_NAME,
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECTET,
+  RAZORPAY_KEY_ID,
+  RAZORPAY_KEY_SECRET,
 } = process.env;
 
 const envConfig = {
@@ -34,6 +36,8 @@ const envConfig = {
   CLOUDINARY_CLOUD_NAME,
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECTET,
+  RAZORPAY_KEY_ID,
+  RAZORPAY_KEY_SECRET,
 };
 
 export default envConfig;
