@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
+import cloudinary from "cloudinary";
 
 import User from "../models/user.shema.js";
 import asyncHandler from "../services/asyncHandler.js";
@@ -127,5 +128,34 @@ export const resetPassword = asyncHandler(async (req, res) => {
   return res.status(200).json({
     success: true,
     message: "Password changed successfully",
+  });
+});
+
+export const updateProfile = asyncHandler(async (req, res) => {
+  const { name } = req.body;
+
+  const user = req.user;
+  const data = { name };
+
+  if (req.files) {
+    const file = req.files.photo;
+    if (user?.photo?.public_id) {
+      await cloudinary.v2.uploader.destroy(user.photo.public_id);
+    }
+    let result = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+      folder: "cack_order/users",
+    });
+
+    data.photo = {
+      public_id: result.public_id,
+      secure_url: result.secure_url,
+    };
+  }
+  const updatedUser = await User.findByIdAndUpdate(user._id, data, {
+    new: true,
+  });
+  return res.status(200).json({
+    success: true,
+    message: updatedUser,
   });
 });
