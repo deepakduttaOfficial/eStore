@@ -1,6 +1,7 @@
 import asyncHandler from "../services/asyncHandler.js";
 import CustomError from "../services/errorHandler.js";
 import Product from "../models/product.schema.js";
+import Order from "../models/order.schema.js";
 
 export const checkOrderField = asyncHandler(async (req, _res, next) => {
   const { shippingInfo, orderItems, totalAmount } = req.body;
@@ -52,3 +53,14 @@ export const isProductAvailable = asyncHandler(async (req, _res, next) => {
 
   next();
 });
+
+export const findOrderById = async (req, res, next, id) => {
+  try {
+    const order = await Order.findById(id);
+    if (!order) return res.status(400).json({ error: "Invalid OrderId" });
+    req.order = order;
+    next();
+  } catch (error) {
+    return res.status(400).json({ error: "Invalid OrderId" });
+  }
+};

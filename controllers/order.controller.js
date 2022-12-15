@@ -44,3 +44,22 @@ export const createOrder = asyncHandler(async (req, res) => {
     order,
   });
 });
+
+export const userGetOrder = asyncHandler(async (req, res) => {
+  const order = req.order;
+  if (!order.user.equals(req.auth._id)) {
+    throw new CustomError("Unauthorize user");
+  }
+  return res.status(200).json({
+    success: true,
+    order,
+  });
+});
+
+export const userGetOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.auth._id });
+  return res.status(200).json({
+    success: true,
+    orders,
+  });
+});
