@@ -154,8 +154,27 @@ export const updateProfile = asyncHandler(async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(user._id, data, {
     new: true,
   });
+  updatePassword.password = undefined;
   return res.status(200).json({
     success: true,
     message: updatedUser,
+  });
+});
+
+export const updatePassword = asyncHandler(async (req, res) => {
+  const { old_password, new_password } = req.body;
+  const user = await User.findById(req.user._id);
+
+  if (!(await user.comparePassword(old_password)))
+    throw new CustomError("Old password is wrong");
+
+  user.password = new_password;
+  await user.save();
+
+  updatePassword.password = undefined;
+
+  return res.status(200).json({
+    success: true,
+    message: user,
   });
 });

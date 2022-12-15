@@ -6,6 +6,7 @@ import {
   resetPassword,
   signin,
   signup,
+  updatePassword,
   updateProfile,
 } from "../controllers/auth.controller.js";
 import {
@@ -22,5 +23,11 @@ router.post("/recover/password", recoverPassword);
 router.post("/resetPassword/password", resetPassword);
 
 router.put("/user/update/:userId", isSignin, isAuthenticate, updateProfile);
+router.put(
+  "/user/update/password/:userId",
+  isSignin,
+  isAuthenticate,
+  updatePassword
+);
 
 export default router;
