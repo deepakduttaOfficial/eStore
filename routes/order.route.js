@@ -1,14 +1,18 @@
 import express from "express";
 const router = express.Router();
 import {
+  adminUpdateOrderStatus,
   createOrder,
   userGetOrder,
   userGetOrders,
 } from "../controllers/order.controller.js";
 
 import {
+  findAdminById,
   findUserById,
+  isAdmin,
   isAuthenticate,
+  isAuthenticateAdmin,
   isSignin,
 } from "../middlewares/auth.middleware.js";
 import {
@@ -20,6 +24,7 @@ import {
 } from "../middlewares/order.middleware.js";
 
 router.param("userId", findUserById);
+router.param("adminId", findAdminById);
 router.param("orderId", findOrderById);
 
 router.post(
@@ -39,6 +44,16 @@ router.get(
   isAuthenticate,
   userGetOrder
 );
+
 router.get("/order/get/:userId", isSignin, isAuthenticate, userGetOrders);
+
+// Admin can update order status
+router.put(
+  "/admin/dashboard/:adminId/orders/:orderId",
+  isSignin,
+  isAuthenticateAdmin,
+  isAdmin,
+  adminUpdateOrderStatus
+);
 
 export default router;

@@ -63,3 +63,21 @@ export const userGetOrders = asyncHandler(async (req, res) => {
     orders,
   });
 });
+
+// Admin controller
+export const adminUpdateOrderStatus = asyncHandler(async (req, res) => {
+  const { orderStatus } = req.body;
+
+  if (!orderStatus) throw new CustomError("Order status is requried", 400);
+
+  const order = await Order.findByIdAndUpdate(
+    req.order._id,
+    { orderStatus },
+    { new: true }
+  );
+
+  return res.status(200).json({
+    success: true,
+    order,
+  });
+});
