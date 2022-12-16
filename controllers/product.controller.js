@@ -118,7 +118,26 @@ export const updateProduct = asyncHandler(async (req, res) => {
 });
 
 export const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  const { search, minPrice, maxPrice } = req.query;
+  const searchObj = {};
+
+  if (search) {
+    searchObj.$or = [
+      { name: new RegExp(search, "i") },
+      { description: new RegExp(search, "i") },
+    ];
+  }
+
+  if (maxPrice) {
+    searchObj.price = { $gte: maxPrice };
+  }
+
+  if (minPrice) {
+    searchObj.price = { $lte: minPrice };
+  }
+
+  const products = await Product.find(searchObj);
+
   return res.status(200).json({
     success: true,
     products,

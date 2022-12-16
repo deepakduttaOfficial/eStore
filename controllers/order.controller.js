@@ -57,7 +57,7 @@ export const userGetOrder = asyncHandler(async (req, res) => {
 });
 
 export const userGetOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({ user: req.auth._id });
+  const orders = await Order.find().where({ user: req.auth._id });
   return res.status(200).json({
     success: true,
     orders,
