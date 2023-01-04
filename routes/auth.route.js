@@ -4,6 +4,7 @@ const router = express.Router();
 import {
   adminGetAllUser,
   adminUpdateRole,
+  getUserFromToken,
   recoverPassword,
   resetPassword,
   signin,
@@ -25,6 +26,7 @@ router.param("adminId", findAdminById);
 
 router.post("/signup", signup);
 router.post("/signin", signin);
+router.get("/getuserfromtoken", isSignin, getUserFromToken);
 router.post("/recover/password", recoverPassword);
 router.post("/resetPassword/password", resetPassword);
 

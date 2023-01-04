@@ -78,6 +78,22 @@ export const signin = asyncHandler(async (req, res) => {
   });
 });
 
+export const getUserFromToken = asyncHandler(async (req, res) => {
+  // Extact data from body
+  const user = await User.findById(req.auth._id);
+  if (!user) return res.status(400).json({ error: "Invalid User" });
+
+  res.status(200).json({
+    success: true,
+    user: {
+      name: user.name,
+      photo: user?.photo,
+      email: user.email,
+      isVerified: user.isVerified,
+    },
+  });
+});
+
 export const recoverPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
   if (!email) throw new CustomError("Enter email address", 400);
