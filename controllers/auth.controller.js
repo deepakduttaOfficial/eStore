@@ -63,6 +63,9 @@ export const signin = asyncHandler(async (req, res) => {
   );
 
   user.password = undefined;
+  user.resetPasswordExpires = undefined;
+  user.resetPasswordToken = undefined;
+  user.verifyToken = undefined;
 
   const token = user.authJwtToken();
 
@@ -83,14 +86,14 @@ export const getUserFromToken = asyncHandler(async (req, res) => {
   const user = await User.findById(req.auth._id);
   if (!user) return res.status(400).json({ error: "Invalid User" });
 
+  user.password = undefined;
+  user.resetPasswordExpires = undefined;
+  user.resetPasswordToken = undefined;
+  user.verifyToken = undefined;
+
   res.status(200).json({
     success: true,
-    user: {
-      name: user.name,
-      photo: user?.photo,
-      email: user.email,
-      isVerified: user.isVerified,
-    },
+    user,
   });
 });
 
@@ -116,8 +119,7 @@ export const recoverPassword = asyncHandler(async (req, res) => {
 });
 
 export const resetPassword = asyncHandler(async (req, res) => {
-  const { id, reset_password_token } = req.query;
-  const { password } = req.body;
+  const { password, id, reset_password_token } = req.body;
 
   if (!(id?.length === 24 && reset_password_token))
     throw new CustomError("Invalid url", 400);
