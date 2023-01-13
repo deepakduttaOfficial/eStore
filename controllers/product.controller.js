@@ -92,6 +92,8 @@ export const updateProduct = asyncHandler(async (req, res) => {
     for (const file of photos) {
       let result = await cloudinary.v2.uploader.upload(file.tempFilePath, {
         folder: "cack_order/products",
+        use_filename: true,
+        unique_filename: false,
       });
       images.push({
         public_id: result.public_id,
