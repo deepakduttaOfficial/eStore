@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
 import {
+  adminGetAllOrders,
   adminUpdateOrderStatus,
   createOrder,
   userGetOrder,
@@ -54,6 +55,14 @@ router.put(
   isAuthenticateAdmin,
   isAdmin,
   adminUpdateOrderStatus
+);
+
+router.get(
+  "/admin/get/:adminId/orders",
+  isSignin,
+  isAuthenticateAdmin,
+  isAdmin,
+  adminGetAllOrders
 );
 
 export default router;

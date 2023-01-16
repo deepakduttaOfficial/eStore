@@ -81,3 +81,14 @@ export const adminUpdateOrderStatus = asyncHandler(async (req, res) => {
     order,
   });
 });
+
+export const adminGetAllOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({});
+  if (!orders) {
+    throw new CustomError("No order found");
+  }
+  return res.status(200).json({
+    success: true,
+    orders,
+  });
+});
