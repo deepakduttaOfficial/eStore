@@ -3,6 +3,7 @@ import cloudinary from "cloudinary";
 import asyncHandler from "../services/asyncHandler.js";
 import CustomError from "../services/errorHandler.js";
 import Product from "../models/product.schema.js";
+import Category from "../models/category.schema.js";
 
 export const createProduct = asyncHandler(async (req, res) => {
   // Extract data from body
@@ -54,6 +55,11 @@ export const createProduct = asyncHandler(async (req, res) => {
   };
 
   const product = await Product.create(data);
+
+  await Category.findByIdAndUpdate(category, {
+    $push: { products: product._id },
+  });
+
   return res.status(200).json({
     success: true,
     product,

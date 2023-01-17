@@ -83,7 +83,7 @@ export const adminUpdateOrderStatus = asyncHandler(async (req, res) => {
 });
 
 export const adminGetAllOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({});
+  const orders = await Order.find({}).populate("user", "name email isVerified");
   if (!orders) {
     throw new CustomError("No order found");
   }

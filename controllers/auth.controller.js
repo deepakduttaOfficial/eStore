@@ -172,10 +172,15 @@ export const updateProfile = asyncHandler(async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(user._id, data, {
     new: true,
   });
-  updatePassword.password = undefined;
+
+  updatedUser.password = undefined;
+  updatedUser.resetPasswordExpires = undefined;
+  updatedUser.resetPasswordToken = undefined;
+  updatedUser.verifyToken = undefined;
+
   return res.status(200).json({
     success: true,
-    message: updatedUser,
+    user: updatedUser,
   });
 });
 
@@ -189,7 +194,10 @@ export const updatePassword = asyncHandler(async (req, res) => {
   user.password = new_password;
   await user.save();
 
-  updatePassword.password = undefined;
+  user.password = undefined;
+  user.resetPasswordExpires = undefined;
+  user.resetPasswordToken = undefined;
+  user.verifyToken = undefined;
 
   return res.status(200).json({
     success: true,
