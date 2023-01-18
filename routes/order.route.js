@@ -4,6 +4,7 @@ import {
   adminGetAllOrders,
   adminUpdateOrderStatus,
   createOrder,
+  createPayment,
   userGetOrder,
   userGetOrders,
 } from "../controllers/order.controller.js";
@@ -33,10 +34,18 @@ router.post(
   isSignin,
   isAuthenticate,
   checkOrderField,
+  createOrder
+);
+
+router.post(
+  "/order/create/payment/:userId",
+  isSignin,
+  isAuthenticate,
+  checkOrderField,
   isValidateProducts,
   isProductAvailable,
   amoutChecker,
-  createOrder
+  createPayment
 );
 
 router.get(

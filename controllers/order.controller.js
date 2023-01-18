@@ -6,15 +6,10 @@ import Order from "../models/order.schema.js";
 import Product from "../models/product.schema.js";
 
 export const createOrder = asyncHandler(async (req, res) => {
-  const { shippingInfo, orderItems, totalAmount } = req.body;
+  const { shippingInfo, orderItems, totalAmount, paymentInfo } = req.body;
+  if (!paymentInfo) return new CustomError("Paymet fail");
   const { address, city, phoneNo, postalCode, state } = shippingInfo;
 
-  const paymentInfo = {
-    totalAmount: totalAmount, // Don't need to multiply by 100
-    notes: shippingInfo,
-    receipt: uuidv4(),
-  };
-  const { id, receipt, status } = await razorpayPayment(paymentInfo);
   const data = {
     shippingInfo: {
       address,
@@ -26,7 +21,7 @@ export const createOrder = asyncHandler(async (req, res) => {
     user: req.auth._id,
     orderItems,
     totalAmount,
-    paymentInfo: { id, receipt, status },
+    paymentInfo,
   };
 
   const order = await Order.create(data);
@@ -38,10 +33,28 @@ export const createOrder = asyncHandler(async (req, res) => {
       $inc: { sold: value.quantity, stock: -value.quantity },
     });
   }
-
   return res.status(200).json({
     success: true,
     order,
+  });
+});
+
+export const createPayment = asyncHandler(async (req, res) => {
+  const { totalAmount } = req.body;
+
+  const paymentInfo = {
+    totalAmount: totalAmount, // Don't need to multiply by 100
+    notes: {
+      name: req.user?.name,
+      email: req.user?.email,
+    },
+    receipt: uuidv4(),
+  };
+  const { id, receipt, status } = await razorpayPayment(paymentInfo);
+
+  return res.status(200).json({
+    success: true,
+    payment: { id, receipt, status },
   });
 });
 

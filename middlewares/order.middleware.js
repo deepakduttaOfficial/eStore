@@ -4,6 +4,7 @@ import Product from "../models/product.schema.js";
 import Order from "../models/order.schema.js";
 
 export const checkOrderField = asyncHandler(async (req, _res, next) => {
+  console.log(req.body);
   const { shippingInfo, orderItems, totalAmount } = req.body;
   if (!(shippingInfo && orderItems && totalAmount))
     throw new CustomError("All fields are required");
