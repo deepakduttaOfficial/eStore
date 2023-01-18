@@ -3,7 +3,6 @@ import envConfig from "./env.config.js";
 
 (async () => {
   try {
-    mongoose.set("strictQuery", false);
     await mongoose.connect(envConfig.DB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
