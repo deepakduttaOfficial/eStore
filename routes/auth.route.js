@@ -11,6 +11,7 @@ import {
   signup,
   updatePassword,
   updateProfile,
+  varifyAccount,
 } from "../controllers/auth.controller.js";
 import {
   findAdminById,
@@ -26,6 +27,7 @@ router.param("adminId", findAdminById);
 
 router.post("/signup", signup);
 router.post("/signin", signin);
+router.post("/user/verifyaccount", varifyAccount);
 router.get("/getuserfromtoken", isSignin, getUserFromToken);
 router.post("/recover/password", recoverPassword);
 router.post("/resetPassword/password", resetPassword);

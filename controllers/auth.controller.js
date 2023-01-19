@@ -32,10 +32,13 @@ export const signup = asyncHandler(async (req, res) => {
 
   const user = await User.create(data);
 
-  user.password = undefined;
+  const options = { _id: user._id, email, name, verifyToken };
+  authMailSender(options);
 
-  const options = { email, name, verifyToken };
-  authMailSender(options, req);
+  user.password = undefined;
+  user.resetPasswordExpires = undefined;
+  user.resetPasswordToken = undefined;
+  user.verifyToken = undefined;
 
   res.status(200).json({
     success: true,
@@ -75,6 +78,51 @@ export const signin = asyncHandler(async (req, res) => {
   });
 
   res.status(200).json({
+    success: true,
+    user,
+    sign_in: token,
+  });
+});
+
+export const varifyAccount = asyncHandler(async (req, res) => {
+  const { id, varify_email_token } = req.body;
+  if (!(id?.length === 24 && varify_email_token))
+    throw new CustomError("Invalid url", 400);
+  jwt.verify(
+    varify_email_token,
+    envConfig.EMAIL_VERIFY_TOKEN_SECRET_KEY,
+    (error, _) => {
+      if (error) {
+        throw new CustomError(
+          "Sorry, the link in your verification email has expired. To complete your profile verification, please request a new verification email through your profile.",
+          400
+        );
+      }
+    }
+  );
+
+  const user = await User.findOne({
+    _id: id,
+    verifyToken: varify_email_token,
+  });
+  if (!user) throw new CustomError("Invalid url", 400);
+
+  user.verifyToken = null;
+  user.isVerified = true;
+  await user.save();
+
+  const token = user.authJwtToken();
+  res.cookie("sign_in", token, {
+    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    httpOnly: true,
+  });
+
+  user.password = undefined;
+  user.resetPasswordExpires = undefined;
+  user.resetPasswordToken = undefined;
+  user.verifyToken = undefined;
+
+  return res.status(200).json({
     success: true,
     user,
     sign_in: token,
@@ -138,8 +186,8 @@ export const resetPassword = asyncHandler(async (req, res) => {
     throw new CustomError("Password must be 4 charecter long", 400);
 
   user.password = password;
-  user.resetPasswordToken = undefined;
-  user.resetPasswordExpires = undefined;
+  user.resetPasswordToken = null;
+  user.resetPasswordExpires = null;
 
   await user.save();
 
