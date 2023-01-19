@@ -111,7 +111,7 @@ export const recoverPassword = asyncHandler(async (req, res) => {
 
   const options = { email, name: user.name, link };
 
-  resetPasswordMailSender(options);
+  await resetPasswordMailSender(options);
   return res.status(200).json({
     success: true,
     message: "Chack you mail and reset your password",
