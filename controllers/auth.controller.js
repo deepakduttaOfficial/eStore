@@ -84,6 +84,38 @@ export const signin = asyncHandler(async (req, res) => {
   });
 });
 
+export const sendVarificatoinToken = asyncHandler(async (req, res) => {
+  const { _id } = req.auth;
+
+  const user = await User.findOne({ _id });
+  if (!user) throw new CustomError("Invalid user", 400);
+  if (user.isVerified) throw new CustomError("You already varified", 400);
+
+  const verifyToken = jwt.sign(
+    { id: uuidv4() },
+    envConfig.EMAIL_VERIFY_TOKEN_SECRET_KEY,
+    {
+      expiresIn: "1h",
+    }
+  );
+
+  user.verifyToken = verifyToken;
+  await user.save();
+
+  const options = {
+    _id: user._id,
+    email: user.email,
+    name: user.name,
+    verifyToken,
+  };
+  authMailSender(options);
+
+  return res.status(200).json({
+    success: true,
+    message: "Please confirm your email to continue",
+  });
+});
+
 export const varifyAccount = asyncHandler(async (req, res) => {
   const { id, varify_email_token } = req.body;
   if (!(id?.length === 24 && varify_email_token))
