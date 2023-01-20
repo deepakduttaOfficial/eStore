@@ -41,7 +41,7 @@ export const signup = asyncHandler(async (req, res) => {
   const user = await User.create(data);
 
   const options = { _id: user._id, email, name, verifyToken };
-  authMailSender(options);
+  await authMailSender(options);
 
   user.password = undefined;
   user.resetPasswordExpires = undefined;
