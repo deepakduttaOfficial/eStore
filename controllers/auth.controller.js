@@ -9,12 +9,20 @@ import envConfig from "../config/env.config.js";
 import authMailSender from "../services/authMailSender.js";
 import resetPasswordMailSender from "../services/resetPasswordMailSender.js";
 
+const emailTester = (email) => {
+  let emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  return emailRegex.test(email);
+};
+
 export const signup = asyncHandler(async (req, res) => {
   // Extact data from body
   const { name, email, password } = req.body;
   if (!(name && email && password)) {
     throw new CustomError("All field are required", 400);
   }
+  if (!emailTester(email)) throw new CustomError("Invalid email", 400);
+
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     throw new CustomError("User already exists", 400);
@@ -52,6 +60,7 @@ export const signin = asyncHandler(async (req, res) => {
   if (!(email && password)) {
     throw new CustomError("All field are required", 400);
   }
+  if (!emailTester(email)) throw new CustomError("Invalid email", 400);
   const user = await User.findOne({ email });
 
   if (!(user && (await user.comparePassword(password)))) {
@@ -180,6 +189,7 @@ export const getUserFromToken = asyncHandler(async (req, res) => {
 export const recoverPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
   if (!email) throw new CustomError("Enter email address", 400);
+  if (!emailTester(email)) throw new CustomError("Invalid email", 400);
   const getUser = await User.findOne({ email });
   if (!getUser) throw new CustomError("User not found", 400);
 
