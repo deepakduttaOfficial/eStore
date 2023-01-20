@@ -131,17 +131,16 @@ export const getProducts = asyncHandler(async (req, res) => {
 
   if (search) {
     searchObj.$or = [
-      { name: new RegExp(search, "i") },
-      { description: new RegExp(search, "i") },
+      { name: new RegExp(search.trim(), "i") },
+      { description: new RegExp(search.trim(), "i") },
     ];
   }
 
   if (maxPrice) {
-    searchObj.price = { $gte: maxPrice };
+    searchObj.price = { ...searchObj.price, $lte: maxPrice.trim() };
   }
-
   if (minPrice) {
-    searchObj.price = { $lte: minPrice };
+    searchObj.price = { ...searchObj.price, $gte: minPrice.trim() };
   }
 
   const products = await Product.find(searchObj);
