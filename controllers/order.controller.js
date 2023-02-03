@@ -6,7 +6,7 @@ import Order from "../models/order.schema.js";
 import Product from "../models/product.schema.js";
 
 /******************************************************
- * @Create_ORDER
+ * @CREATE_ORDER
  * @ROLE USER
  * @route  http://localhost:8000/api/v1/order/create/:userId
  * @description Createa order
@@ -50,7 +50,7 @@ export const createOrder = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Create_ORDER_Payment
+ * @CREATE_ORDER_PAYMENT
  * @ROLE USER
  * @route  http://localhost:8000/api/v1/order/create/payment/:userId
  * @description It will create a 'order Id' and send to the client and also store into the razoypay
@@ -78,7 +78,7 @@ export const createPayment = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Get_ORDER
+ * @GET_ORDER
  * @ROLE USER
  * @route  http://localhost:8000/api/v1/order/get/:userId/:orderId
  * @description Get silgle Order
@@ -98,7 +98,7 @@ export const userGetOrder = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Get_all_ORDER
+ * @GET_ALL_ORDER
  * @ROLE USER
  * @route  http://localhost:8000/api/v1/order/get/:userId
  * @description Get All  Orders
@@ -115,7 +115,7 @@ export const userGetOrders = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Update_ORDER
+ * @UPDATE_ORDER
  * @ROLE ADMIN
  * @route  http://localhost:8000/api/v1/admin/dashboard/:adminId/orders/:orderId
  * @description Update user order status
@@ -141,7 +141,7 @@ export const adminUpdateOrderStatus = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Ademin_Get_AllOrders_ORDER
+ * @GET_ALL_ORDER
  * @ROLE ADMIN
  * @route  http://localhost:8000/api/v1/admin/get/:adminId/orders
  * @description Admin can access all order

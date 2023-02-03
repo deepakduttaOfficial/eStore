@@ -3,7 +3,7 @@ import CustomError from "../services/errorHandler.js";
 import Category from "../models/category.schema.js";
 
 /******************************************************
- * @Create_CATEGORY
+ * @CREATE_CATEGORY
  * @ROLE ADMIN
  * @route http://localhost:8000/api/v1/category/create/:adminId
  * @description Admin can create  Category
@@ -31,7 +31,7 @@ export const createCategory = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Update_CATEGORY
+ * @UPDATE_CATEGORY
  * @ROLE ADMIN
  * @route http://localhost:8000/api/v1/category/update/:adminId/:categoryId
  * @description Admin can update  Category
@@ -58,7 +58,7 @@ export const updateCategory = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Get_Single_CATEGORY
+ * @GET_SINGLE_CATEGORY
  * @ROLE ADMIN || USER
  * @route http://localhost:8000/api/v1/category/get/:categoryId
  * @description Single Category
@@ -77,7 +77,7 @@ export const getSingleCategory = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Get_Single_CATEGORY
+ * @GET_ALL_CATEGORY
  * @ROLE ADMIN || USER
  * @route http://localhost:8000/api/v1/category/get
  * @description All Categories
@@ -96,7 +96,7 @@ export const getAllCategory = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Get_Single_CATEGORY
+ * @REMOVE_CATEGORY
  * @ROLE ADMIN
  * @route http://localhost:8000/api/v1/category/remove/:adminId/:categoryId
  * @description Remove Category

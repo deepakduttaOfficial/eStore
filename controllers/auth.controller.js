@@ -203,7 +203,7 @@ export const varifyAccount = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @VERIFY_ACCOUNT
+ * @GET_USER_FROM_TOKEN
  * @ROLE USER
  * @route  http://localhost:8000/api/v1/getuserfromtoken
  * @description It will virify user Account
@@ -228,7 +228,7 @@ export const getUserFromToken = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @VERIFY_ACCOUNT
+ * @RECOVER_PASSWORD
  * @ROLE USER
  * @route  http://localhost:8000/api/v1/recover/password
  * @description Recover password send a (Recovery password) token to user Email
@@ -258,7 +258,7 @@ export const recoverPassword = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @VERIFY_ACCOUNT
+ * @RESET_PASSWORD
  * @ROLE USER
  * @route  http://localhost:8000/api/v1/resetPassword/password
  * @description Reset password controller reset user passport
@@ -298,7 +298,7 @@ export const resetPassword = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @SIGNUP
+ * @UPDATE_PROFILE
  * @ROLE USER
  * @route http://localhost:8000/api/v1/user/update/:userId
  * @description User signUp Controller for creating new user
@@ -342,7 +342,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @SIGNUP
+ * @UPDATE_PASSWORD
  * @ROLE USER
  * @route http://localhost:8000/api/v1/user/update/password/:userId
  * @description Update passport will update user password
@@ -372,7 +372,7 @@ export const updatePassword = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @SIGNUP
+ * @GET_ALL_USER
  * @ROLE ADMIN
  * @route http://localhost:8000/api/v1/admin/dashboard/:adminId/users
  * @description Admin has access to Reguler user info
@@ -392,7 +392,7 @@ export const adminGetAllUser = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @SIGNUP
+ * @UPDATE_USER_ROLE
  * @ROLE ADMIN
  * @route http://localhost:8000/api/v1/admin/dashboard/:adminId/users/:userId/update/role
  * @description Admin has access to Update user role

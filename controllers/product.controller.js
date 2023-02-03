@@ -6,7 +6,7 @@ import Product from "../models/product.schema.js";
 import Category from "../models/category.schema.js";
 
 /******************************************************
- * @Create_Product
+ * @CREATE_PRODUCT
  * @ROLE ADMIN
  * @route http://localhost:8000/api/v1/product/create/:adminId
  * @description Admin can create Product
@@ -76,7 +76,7 @@ export const createProduct = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Update_PRODUCT
+ * @UPDATE_PRODUCT
  * @ROLE ADMIN
  * @route http://localhost:8000/api/v1/product/update/:adminId/:productId
  * @description Admin can Update Product
@@ -144,7 +144,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Get_PRODUCTS
+ * @GET_ALL_PRODUCTS
  * @ROLE ADMIN || USER
  * @route http://localhost:8000/api/v1/product/get
  * @description Get all product
@@ -179,7 +179,7 @@ export const getProducts = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Get_PRODUCT
+ * @GET_ALL_PRODUCT
  * @ROLE ADMIN || USER
  * @route http://localhost:8000/api/v1/product/get/:productId
  * @description Get Single product
@@ -196,7 +196,7 @@ export const getProduct = asyncHandler(async (req, res) => {
 });
 
 /******************************************************
- * @Remove_PRODUCT
+ * @REMOVE_PRODUCT
  * @ROLE ADMIN
  * @route http://localhost:8000/api/v1/product/remove/:adminId/:productId
  * @description Admin can Update Product
