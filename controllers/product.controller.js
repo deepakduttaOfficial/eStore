@@ -5,6 +5,15 @@ import CustomError from "../services/errorHandler.js";
 import Product from "../models/product.schema.js";
 import Category from "../models/category.schema.js";
 
+/******************************************************
+ * @Create_Product
+ * @ROLE ADMIN
+ * @route http://localhost:8000/api/v1/product/create/:adminId
+ * @description Admin can create Product
+ * @parameters name, price, description, stock, category, photo
+ * @middleware isSignin, isAuthenticateAdmin, isAdmin,
+ * @returns Product Object
+ ******************************************************/
 export const createProduct = asyncHandler(async (req, res) => {
   // Extract data from body
   const { name, price, description, stock, category } = req.body;
@@ -66,6 +75,15 @@ export const createProduct = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @Update_PRODUCT
+ * @ROLE ADMIN
+ * @route http://localhost:8000/api/v1/product/update/:adminId/:productId
+ * @description Admin can Update Product
+ * @parameters name, price, description, stock, category, photo
+ * @middleware isSignin, isAuthenticateAdmin, isAdmin,
+ * @returns Product Object
+ ******************************************************/
 export const updateProduct = asyncHandler(async (req, res) => {
   // Extract data from body
   const { name, price, description, stock, category } = req.body;
@@ -125,6 +143,15 @@ export const updateProduct = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @Get_PRODUCTS
+ * @ROLE ADMIN || USER
+ * @route http://localhost:8000/api/v1/product/get
+ * @description Get all product
+ * @parameters
+ * @middleware
+ * @returns Products Arrary
+ ******************************************************/
 export const getProducts = asyncHandler(async (req, res) => {
   const { search, minPrice, maxPrice } = req.query;
   const searchObj = {};
@@ -151,6 +178,15 @@ export const getProducts = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @Get_PRODUCT
+ * @ROLE ADMIN || USER
+ * @route http://localhost:8000/api/v1/product/get/:productId
+ * @description Get Single product
+ * @parameters
+ * @middleware
+ * @returns Product Object
+ ******************************************************/
 export const getProduct = asyncHandler(async (req, res) => {
   const product = req.product;
   return res.status(200).json({
@@ -159,6 +195,15 @@ export const getProduct = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @Remove_PRODUCT
+ * @ROLE ADMIN
+ * @route http://localhost:8000/api/v1/product/remove/:adminId/:productId
+ * @description Admin can Update Product
+ * @parameters
+ * @middleware isSignin, isAuthenticateAdmin, isAdmin,
+ * @returns
+ ******************************************************/
 export const removeProduct = asyncHandler(async (req, res) => {
   const product = req.product;
 

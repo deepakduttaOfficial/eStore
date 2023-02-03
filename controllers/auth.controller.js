@@ -15,6 +15,13 @@ const emailTester = (email) => {
   return emailRegex.test(email);
 };
 
+/******************************************************
+ * @SIGNUP
+ * @route http://localhost:8000/api/v1/auth/signup
+ * @description User signUp Controller for creating new user
+ * @parameters name, email, password
+ * @returns User Object
+ ******************************************************/
 export const signup = asyncHandler(async (req, res) => {
   // Extact data from body
   const { name, email, password } = req.body;
@@ -54,6 +61,14 @@ export const signup = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @SIGNIN
+ * @ROLE USER
+ * @route http://localhost:8000/api/v1/signin
+ * @description User signIn Controller for loging new user
+ * @parameters email, password
+ * @returns User Object
+ ******************************************************/
 export const signin = asyncHandler(async (req, res) => {
   // Extact data from body
   const { email, password } = req.body;
@@ -93,6 +108,15 @@ export const signin = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @SEND_VARIFICATION_TOKEN
+ * @ROLE USER
+ * @route http://localhost:8000/api/v1/user/resend/verificationmail/:userId
+ * @description After expired token, user can also send a new token to their email for varification
+ * @parameters userID(id)
+ * @middleware isSignin, isAuthenticate
+ * @returns
+ ******************************************************/
 export const sendVarificatoinToken = asyncHandler(async (req, res) => {
   const { _id } = req.auth;
 
@@ -125,6 +149,14 @@ export const sendVarificatoinToken = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @VERIFY_ACCOUNT
+ * @ROLE USER
+ * @route  http://localhost:8000/api/v1/user/verifyaccount
+ * @description It will virify user Account
+ * @parameters userID(id), varify_email_token
+ * @returns User Object
+ ******************************************************/
 export const varifyAccount = asyncHandler(async (req, res) => {
   const { id, varify_email_token } = req.body;
   if (!(id?.length === 24 && varify_email_token))
@@ -170,6 +202,15 @@ export const varifyAccount = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @VERIFY_ACCOUNT
+ * @ROLE USER
+ * @route  http://localhost:8000/api/v1/getuserfromtoken
+ * @description It will virify user Account
+ * @parameters
+ * @middleware isSignin
+ * @returns User Object
+ ******************************************************/
 export const getUserFromToken = asyncHandler(async (req, res) => {
   // Extact data from body
   const user = await User.findById(req.auth._id);
@@ -186,6 +227,14 @@ export const getUserFromToken = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @VERIFY_ACCOUNT
+ * @ROLE USER
+ * @route  http://localhost:8000/api/v1/recover/password
+ * @description Recover password send a (Recovery password) token to user Email
+ * @parameters email
+ * @returns
+ ******************************************************/
 export const recoverPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
   if (!email) throw new CustomError("Enter email address", 400);
@@ -208,6 +257,15 @@ export const recoverPassword = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @VERIFY_ACCOUNT
+ * @ROLE USER
+ * @route  http://localhost:8000/api/v1/resetPassword/password
+ * @description Reset password controller reset user passport
+ * @parameters password, id, reset_password_token
+ * @middleware
+ * @returns
+ ******************************************************/
 export const resetPassword = asyncHandler(async (req, res) => {
   const { password, id, reset_password_token } = req.body;
 
@@ -239,6 +297,15 @@ export const resetPassword = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @SIGNUP
+ * @ROLE USER
+ * @route http://localhost:8000/api/v1/user/update/:userId
+ * @description User signUp Controller for creating new user
+ * @parameters name || photo, userId
+ * @middleware isSignin, isAuthenticate
+ * @returns User Object
+ ******************************************************/
 export const updateProfile = asyncHandler(async (req, res) => {
   const { name } = req.body;
 
@@ -274,6 +341,15 @@ export const updateProfile = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @SIGNUP
+ * @ROLE USER
+ * @route http://localhost:8000/api/v1/user/update/password/:userId
+ * @description Update passport will update user password
+ * @parameters userId, old_password, new_password
+ * @middleware isSignin, isAuthenticate
+ * @returns
+ ******************************************************/
 export const updatePassword = asyncHandler(async (req, res) => {
   const { old_password, new_password } = req.body;
   const user = await User.findById(req.user._id);
@@ -295,7 +371,15 @@ export const updatePassword = asyncHandler(async (req, res) => {
   });
 });
 
-// Admin controllers
+/******************************************************
+ * @SIGNUP
+ * @ROLE ADMIN
+ * @route http://localhost:8000/api/v1/admin/dashboard/:adminId/users
+ * @description Admin has access to Reguler user info
+ * @parameters adminId,
+ * @middleware isSignin, isAuthenticateAdmin, isAdmin,
+ * @returns User Object
+ ******************************************************/
 export const adminGetAllUser = asyncHandler(async (req, res) => {
   const users = await User.find();
   for (const user of users) {
@@ -307,6 +391,15 @@ export const adminGetAllUser = asyncHandler(async (req, res) => {
   });
 });
 
+/******************************************************
+ * @SIGNUP
+ * @ROLE ADMIN
+ * @route http://localhost:8000/api/v1/admin/dashboard/:adminId/users/:userId/update/role
+ * @description Admin has access to Update user role
+ * @parameters userId,role
+ * @middleware isSignin, isAuthenticateAdmin, isAdmin,
+ * @returns User Object
+ ******************************************************/
 export const adminUpdateRole = asyncHandler(async (req, res) => {
   const { role } = req.body;
   if (!role) throw new CustomError("Role is requried", 400);
