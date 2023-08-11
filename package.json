@@ -1,7 +1,7 @@
 {
   "name": "cake-order-backend",
   "version": "1.0.0",
-  "description": "Online cake ordering platform",
+  "description": "E-commerce store",
   "main": "index.js",
   "repository": "git@github.com:deepakduttaOfficial/cake-order-backend.git",
   "author": "DEEPAK DUTTA <coder.deepakyt@gmail.com>",
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.40.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
