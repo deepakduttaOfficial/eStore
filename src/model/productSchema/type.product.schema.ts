@@ -1,5 +1,5 @@
-import { UploadApiResponse } from "cloudinary"
-import { Types } from "mongoose"
+import { UploadApiResponse } from "cloudinary";
+import { Types, Document } from "mongoose";
 import Size from "../../utils/size.utils";
 
 export interface ProductInterface {
@@ -10,9 +10,15 @@ export interface ProductInterface {
   sold: number;
   category: Types.ObjectId;
   user: Types.ObjectId;
-  images: UploadApiResponse;
-  sizes: Size[]
-  keyword?: string[]
-  isCashOnDelivery: boolean
-  deliveryCharge: number
+  images: Types.Array<UploadApiResponse>;
+  sizes: Types.Array<Size>;
+  keyword?: string[];
+  isCashOnDelivery: boolean;
+  deliveryCharge: number;
+}
+
+export interface ProductDocument extends ProductInterface, Document {
+  totalPrice: number;
+  createdAt: Date;
+  updatedAt: Date;
 }

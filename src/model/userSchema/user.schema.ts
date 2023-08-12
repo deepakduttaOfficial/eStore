@@ -96,7 +96,7 @@ userSchema.pre("save", async function (next) {
   return next();
 });
 
-// Virtul field
+// Virtual field
 userSchema.virtual("fullName").get(function (this: UserDocument) {
   return `${this.firstName} ${this.lastName}`;
 });
