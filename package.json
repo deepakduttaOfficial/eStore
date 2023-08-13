@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "E-commerce store",
   "main": "index.js",
-  "repository": "git@github.com:deepakduttaOfficial/cake-order-backend.git",
+  "repository": "https://github.com/deepakduttaOfficial/eStore.git",
   "author": "DEEPAK DUTTA <coder.deepakyt@gmail.com>",
   "license": "MIT",
   "scripts": {
