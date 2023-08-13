@@ -11,7 +11,7 @@ const corsOption: cors.CorsOptions = {
     "Authorization",
   ],
   credentials: true,
-  methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+  methods: ["GET", "PUT", "OPTIONS", "POST", "DELETE", "PATCH"],
   origin: envConfig.DOMAIN,
   preflightContinue: false,
 };

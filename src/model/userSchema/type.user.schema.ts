@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 import AuthRoles from "../../utils/authRoles.utils";
-import { UploadApiResponse } from "cloudinary"
+import { UploadApiResponse } from "cloudinary";
 
 export interface UserInterface {
   firstName: string;
@@ -11,7 +11,7 @@ export interface UserInterface {
   isVerified?: boolean;
   verifyToken?: string;
   loginCount?: number;
-  resetPasswordToken?: String;
+  resetPasswordToken?: string;
   resetPasswordExpires?: Date;
   profilePhoto?: UploadApiResponse;
   role: AuthRoles;

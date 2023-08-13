@@ -10,7 +10,7 @@ import envConfig from "./env.config";
         useUnifiedTopology: true,
       } as ConnectOptions
     );
-    
+
     console.log("MongoDB connected successfully");
 
     mongoose.connection.on("error", (err) => {

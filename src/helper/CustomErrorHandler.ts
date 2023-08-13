@@ -1,8 +1,12 @@
 class CustomError extends Error {
   code: number;
-  data: Record<string, any>;
-  
-  constructor(message: string, code: number, data: Record<string, any> = {}) {
+  data: Record<string, unknown>;
+
+  constructor(
+    message: string,
+    code: number,
+    data: Record<string, unknown> = {}
+  ) {
     super(message);
     this.code = code;
     this.data = data;
@@ -21,4 +25,4 @@ class CustomError extends Error {
   }
 }
 
-export default CustomError
+export default CustomError;

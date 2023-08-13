@@ -34,7 +34,7 @@ export interface RazorpayOrderError {
   source: string;
   step: string;
   reason: string;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   field: string;
 }
 
@@ -70,7 +70,7 @@ export interface RazorpayPaymentSuccessResponse {
   contact: string;
   customer_id: string;
   token_id: string;
-  notes: any[]; // Array of notes
+  notes: unknown[]; // Array of notes
   fee: number;
   tax: number;
   error_code: null | string;
@@ -95,12 +95,12 @@ export interface RazorpayPaymentError {
   source: string;
   step: string;
   reason: string;
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
 }
 
 /**
  * Interface for an error payment response from Razorpay.
  */
 export interface RazorpayPaymentErrorResponse {
-  error: RazorpayPaymentError
+  error: RazorpayPaymentError;
 }

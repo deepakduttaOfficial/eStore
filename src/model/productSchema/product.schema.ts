@@ -70,8 +70,8 @@ const productSchema = new Schema<ProductInterface>(
   { timestamps: true }
 );
 
-productSchema.virtual("totalPrice").get(function(this: ProductDocument) {
-  return this.price + this.deliveryCharge
-})
+productSchema.virtual("totalPrice").get(function (this: ProductDocument) {
+  return this.price + this.deliveryCharge;
+});
 
 export default model<ProductDocument>("User", productSchema);

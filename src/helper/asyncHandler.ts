@@ -7,21 +7,35 @@ interface ErrorResponse {
   code?: number;
 }
 
+type ExpressMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => Promise<void>;
+
 const asyncHandler =
-  (fn: Function) => async (req: Request, res: Response, next: NextFunction) => {
+  (fn: ExpressMiddleware) =>
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       return await fn(req, res, next);
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
+
+      let customError: CustomError;
+
       if (!(error instanceof CustomError)) {
-        error = new CustomError(
-          error.message || "Internal Server Error",
-          error.code || 500,
-          { originalError: error.message }
-        );
+        const message =
+          error instanceof Error ? error.message : "Internal Server Error";
+        const code = error instanceof Error ? 500 : 500;
+        customError = new CustomError(message, code, {
+          originalError: message,
+        });
+      } else {
+        customError = error;
       }
-      const statusCode = error.code || 500;
-      const errorMessage = error.message || "Internal Server Error";
+
+      const statusCode = customError.code || 500;
+      const errorMessage = customError.message || "Internal Server Error";
 
       const errorResponse: ErrorResponse = {
         success: false,

@@ -67,19 +67,19 @@ const orderSchema = new Schema<OrderInterface>(
 
     taxAmount: {
       type: Number,
-      default: 0
+      default: 0,
     },
 
     shippingAmount: {
       type: Number,
-      default: 0
+      default: 0,
     },
 
     totalAmount: {
       type: Number,
       required: [true, "Total amount is required"],
     },
-    
+
     orderStatus: {
       type: String,
       required: [true, "Order status is required"],
