@@ -1,4 +1,4 @@
-# Online Cake Ordering Website (Backend)
+<!-- # Online Cake Ordering Website (Backend)
 
 - Deploy link - [Online Cake Order](https://online-cake-order.netlify.app/)
 - Frontend Source Code - [Code](https://github.com/deepakduttaOfficial/cake-order-frontend)
@@ -21,4 +21,4 @@
 
 > For the admin, the website offers several tools to manage the products and orders. The admin can upload products with multiple images, add categories, manage orders, manage products, and view charts to track their sales and other important data.
 
-## The cake images used in this project were obtained from https://www.fnp.com/ to ensure a visually appealing user experience.
+## The cake images used in this project were obtained from https://www.fnp.com/ to ensure a visually appealing user experience. -->
