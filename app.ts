@@ -6,7 +6,7 @@ import corsOption from "./src/config/cors.config";
 import authRoute from "./src/routes/authRoute/auth.route";
 
 const app: Application = express();
- const version = "v1";
+const version = "v1";
 
 // default middleware
 app.use(cors(corsOption));
