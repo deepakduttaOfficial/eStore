@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import corsOption from "./src/config/cors.config";
 
@@ -9,6 +9,9 @@ const app: Application = express();
 const version = "v1";
 
 // default middleware
+app.get("/", (req: Request, res: Response) =>
+  res.status(200).json("Hello world")
+);
 app.use(cors(corsOption));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
